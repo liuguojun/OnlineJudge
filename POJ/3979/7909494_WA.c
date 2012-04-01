@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+
+int gcd(int m, int n)
+{
+	if( m < 0)
+		m = -1*m;
+	if( n < 0)
+		n = -1*n;
+	if(m < n)
+	{
+		int tmp = m;
+		m = n;
+		n = tmp;
+	}
+
+	
+	while( n!= 1)
+	{
+		if( n == 1)
+			return 1;
+		if( m%n == 0)
+			return n;
+
+		int tmp = m%n;
+		m = n;
+		n = tmp;
+	}
+
+}
+int main()
+{
+
+	int a,b,c,d;
+	char op;
+	scanf("%d/%d%c%d/%d", &a, &b, &op, &c, &d);
+	//printf("%d/%d%c%d/%d", a, b, op, c, d);
+	int m = b * d;
+	int n1 = a*d, n2 = b*c;
+
+	int n;
+	if( op == '+')
+		n = n1+n2;
+	else n = n1 - n2;
+
+	if( n == 0)
+		printf("0\n");
+	else {
+		int tt = gcd(m,n);
+		printf("%d/%d\n", n/tt, m/tt);
+	}
+	return 0;
+}
+
+

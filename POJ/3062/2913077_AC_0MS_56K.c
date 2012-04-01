@@ -1,0 +1,1 @@
+main(a){while(gets(&a))puts(&a);}
