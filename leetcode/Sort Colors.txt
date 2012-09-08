@@ -1,0 +1,25 @@
+class Solution {
+public:
+    void sortColors(int A[], int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int curr = 0;
+        int less = 0;
+        int great = n-1;
+        
+        int key = 1;
+        while (curr <= great) {
+            if (A[curr] < key) {
+                swap(A[curr], A[less]);
+                ++curr;
+                ++less;
+            } else if (A[curr] > key) {
+                swap(A[curr], A[great]);
+                --great;
+            } else {
+                ++curr;
+            }
+        }
+        
+    }
+};

@@ -1,0 +1,50 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+                
+        int la = a.length();
+        int lb = b.length();
+        
+           
+        int Min = min(la, lb);
+        char *ret = new char[max(la, lb) + 2];
+        
+        int index = 0;
+        int add = 0;
+        int curr = 0;
+        
+        for (int i = 1; i <= Min; ++i) {
+            curr = (a[la-i]-'0') + (b[lb-i]-'0') + add;
+            add = curr / 2;
+            ret[index++] = curr % 2 + '0';        
+        } 
+        
+        if (la > Min) {
+            for (int pos = la - Min - 1; pos >= 0; --pos) {
+                curr = (a[pos] - '0') + add;
+                add = curr / 2;
+                ret[index++] = curr % 2 + '0';
+            }
+        }
+        
+        if (lb > Min) {
+            for (int pos = lb - Min -1; pos >= 0; --pos) {
+                curr = (b[pos] - '0') + add;
+                add = curr / 2;
+                ret[index++] = curr % 2 + '0';
+            }
+        }
+        
+        
+        if (add) {
+            ret[index++] = add + '0';
+        }
+        ret[index] = '\0';
+        
+        reverse(ret, ret+index);
+        
+        return string(ret);
+    }
+};

@@ -1,0 +1,48 @@
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+ 
+ bool cmp(const Interval& p, const Interval& q) {
+     if (p.start != q.start)
+        return p.start < q.start;
+    else
+        return p.end < q.end;
+ }
+class Solution {
+public:
+    vector<Interval> merge(vector<Interval> &intervals) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<Interval> ret;
+        
+        if (intervals.empty())
+            return ret;
+            
+        
+        sort(intervals.begin(), intervals.end(), cmp);
+        
+        Interval tmp = intervals[0];
+        
+        for (int i=1; i < intervals.size(); ++i) {
+            if(tmp.end < intervals[i].start) {
+                ret.push_back(tmp);
+                tmp = intervals[i];
+            } else {
+                if (tmp.end < intervals[i].end)
+                    tmp.end = intervals[i].end;
+            }
+        }
+        
+        ret.push_back(tmp);
+        
+        
+        return ret;
+        
+    }
+};

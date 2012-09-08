@@ -1,0 +1,31 @@
+
+class Solution {
+public:
+    vector<vector<int> > threeSum(vector<int> &num) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<vector<int> > ret;
+        if (num.size() < 3)
+            return ret;
+        
+        sort(num.begin(), num.end());
+        
+        int size = num.size();
+        
+        
+        for (int i = 0; i < size; ++i)
+            for (int j = i+1; j < size; ++j) {
+                if (binary_search(num.begin()+j+1, num.end(), -num[i]-num[j])) {
+                    vector<int> tmp;
+                    tmp.push_back(num[i]);
+                    tmp.push_back(num[j]);
+                    tmp.push_back(-num[i]-num[j]);
+                    sort(tmp.begin(), tmp.end());
+                    ret.push_back(tmp);
+                } 
+            }
+        sort(ret.begin(), ret.end());
+        ret.erase(unique(ret.begin(), ret.end()), ret.end());
+        return ret;
+    }
+};

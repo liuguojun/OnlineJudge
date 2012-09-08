@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void merge(int A[], int m, int B[], int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        
+        
+        int index = m+n-1;
+        m--;
+        n--;
+        
+        for ( ; m>=0 && n>=0; --index) {
+            if (A[m] >= B[n]) {
+                A[index] = A[m];
+                --m;
+            } else {
+                A[index] = B[n];
+                --n;
+            }
+        }
+        
+        if (n>=0) {
+            copy(B, B+n+1, A);
+        }
+        
+    }
+};

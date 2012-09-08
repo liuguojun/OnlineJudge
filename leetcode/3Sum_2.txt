@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<vector<int> > threeSum(vector<int> &num) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<vector<int> > ret;
+        
+        if (num.size() < 3)
+            return ret;
+            
+        sort(num.begin(), num.end());
+        
+        int size = num.size();
+        
+        for (int a = 0 ; a < size-2; ++a) {
+            int b = a+1;
+            int c = size-1;
+            int tmp;
+            
+            while (b < c) {
+                tmp = num[a]+num[b]+num[c];
+                
+                if (tmp == 0) {
+                    vector<int> tmp;
+                    tmp.push_back(num[a]);
+                    tmp.push_back(num[b]);
+                    tmp.push_back(num[c]);
+                    sort(tmp.begin(), tmp.end());
+                    ret.push_back(tmp);
+                    ++b;
+                    --c;
+                } else if (tmp < 0) {
+                    ++b;
+                } else if (tmp > 0) {
+                    --c;
+                }
+            }
+            
+        }
+        
+        sort(ret.begin(), ret.end());
+        ret.erase(unique(ret.begin(), ret.end()), ret.end());
+        return ret;
+        
+    }
+};

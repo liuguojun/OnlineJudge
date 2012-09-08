@@ -1,0 +1,50 @@
+void kmp_next(const char* needle, int* next) {
+    next[0] = -1;
+    int i, j=-1;
+    
+    for (i=1; needle[i] != '\0'; ++i) {
+        while (j>-1 && needle[j+1] != needle[i])
+            j = next[j];
+        if (needle[j+1] == needle[i])
+            j = j+1;
+        next[i] = j;
+    }
+    
+}
+
+class Solution {
+public:
+    char *strStr(char *haystack, char *needle) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if (*haystack == 0 && *needle == 0)
+            return haystack;
+        if (*haystack == 0 && *needle != 0)
+            return NULL;
+        if (*haystack != 0 && *needle == 0)
+            return haystack;
+        
+        int len = strlen(needle);
+        int *next = new int[len];
+        
+        kmp_next(needle, next);
+        
+        int j = -1;
+        for (int i = 0; haystack[i]!='\0'; ++i) {
+            while (j>-1 && needle[j+1] != haystack[i])
+                j = next[j];
+            if (needle[j+1] == haystack[i])
+                j = j+1;
+            if (j==len-1) {
+                return haystack+ i - len+1;
+            }
+        }
+        
+        return NULL;
+        
+            
+        
+        
+        
+    }
+};

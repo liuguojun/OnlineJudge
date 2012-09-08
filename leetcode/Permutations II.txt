@@ -1,0 +1,53 @@
+bool nextPermutation(vector<int> &num) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if (num.size() < 2) {
+            return false;;
+        }
+        
+        int i = num.size() - 2;
+        
+        for (; i >= 0; --i) {
+            if (num[i] < num[i+1])
+                break;
+        }
+        
+        if (i < 0) {
+            reverse(num.begin(), num.end());
+            return false;;
+        }
+        
+        int j = num.size() - 1;
+        
+        for (; j >= 0; --j) {
+            if (num[j] > num[i])
+                break;
+        }
+        
+        swap(num[i], num[j]);
+        
+        reverse(num.begin()+i+1, num.end());
+        
+        return true;            
+        
+}
+
+
+class Solution {
+public:
+    vector<vector<int> > permuteUnique(vector<int> &num) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function      
+        
+        vector<vector<int> > ret;
+        
+        sort(num.begin(), num.end());
+        ret.push_back(num);
+        
+        while (nextPermutation(num)) {            
+            ret.push_back(num);
+        }
+        
+        return ret;
+    }
+};

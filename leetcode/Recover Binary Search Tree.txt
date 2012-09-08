@@ -1,0 +1,56 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void recoverTree(TreeNode *root) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if (root == NULL)
+            return;
+        
+        // inorder travelsal to find 2 mistake nodes
+        TreeNode* first = NULL;
+        TreeNode* second = NULL;
+        TreeNode* prev = NULL;
+        
+        stack<TreeNode*> mystack;
+        
+        while (!mystack.empty() || root) {
+            if (root != NULL) {
+                mystack.push(root);
+                root = root->left;
+            } else {
+                root = mystack.top();
+                mystack.pop();
+                
+                if (prev == NULL) {
+                    prev = root;
+                } else {
+                    
+                    if (prev->val >= root->val) {
+                        if (first == NULL) {
+                            first = prev;
+                            second = root;
+                        } else {
+                            second = root;
+                        }
+                    }
+                    prev = root;
+                }
+                
+                root = root->right;                
+            }          
+            
+        }
+        if (first && second)
+            swap(first->val, second->val);
+        
+    }
+};

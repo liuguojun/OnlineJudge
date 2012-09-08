@@ -1,0 +1,50 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+bool cmp(const ListNode* p, const ListNode* q) {
+    return p->val > q->val;
+}
+
+class Solution {
+public:
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        
+        lists.erase(remove(lists.begin(), lists.end(), (ListNode *)NULL), lists.end());
+        if (lists.empty())
+            return NULL;
+        
+        
+        ListNode ret(0);
+        ListNode* curr = &ret;;
+        
+        make_heap(lists.begin(), lists.end(), cmp);
+        
+        while (!lists.empty()) {
+            
+            
+            
+            pop_heap(lists.begin(), lists.end(), cmp);
+            curr->next = lists.back();
+            curr = curr->next;
+        
+            if (lists.back()->next != NULL) {
+                lists.back() = lists.back()->next;
+                push_heap(lists.begin(), lists.end(), cmp);
+            } else {
+                lists.pop_back();
+            }
+            
+            
+        }
+        curr->next = NULL;
+        return ret.next;
+      
+    }
+};
