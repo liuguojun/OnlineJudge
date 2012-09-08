@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int reverse(int x) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        bool op = true;
+        if (x < 0) {
+            op = !op;
+            x = -x;
+        }
+        
+        int val = 0;
+        
+        while (x) {
+            val = val*10 + x%10;
+            x /= 10;
+        }
+        
+        if (!op)
+            val = -val;
+        
+        return val;
+        
+        
+    }
+};

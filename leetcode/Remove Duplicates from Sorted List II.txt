@@ -6,6 +6,14 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+ 
+void deleteNode(ListNode* head) {
+    while (head != NULL) {
+        ListNode* tmp = head;
+        head = head->next;
+        delete tmp;
+    }
+}
 class Solution {
 public:
     ListNode *deleteDuplicates(ListNode *head) {
@@ -14,32 +22,31 @@ public:
         if (head == NULL)
             return NULL;
         
-        ListNode tmphead(head->val-1);
+        ListNode tmphead(0);
         tmphead.next = head;
         
         ListNode* prev = &tmphead;
         ListNode* curr = head;
+      
         
         while (curr != NULL) {
-            if (curr->next == NULL || curr->val != curr->next->val) {
-                prev = prev->next;
-                prev->val = curr->val;
+            if (curr->next != NULL && curr->val == curr->next->val) {
+                ListNode* last = curr->next;
+                while (last != NULL && last->next != NULL && last->next->val == curr->val)
+                    last = last->next;
+                
+                prev->next = last->next;
+                last->next = NULL;
+                deleteNode(curr);
+                curr = prev->next;
             } else {
-                while (curr != NULL && curr->next != NULL && curr->val == curr->next->val)
-                    curr = curr->next;                
-            }
-            if (curr != NULL)
                 curr = curr->next;
-        }
-        
-        // delete duplicate node
-        
-        while (prev->next != NULL ) {
-            ListNode* todelete = prev->next;
-            prev->next = todelete->next;
-            delete todelete;
+                prev = prev->next;
+            }
+            
         }
         
         return tmphead.next;
+        
     }
 };

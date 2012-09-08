@@ -13,56 +13,47 @@ public:
         // DO NOT write int main() function
         if (head == NULL)
             return NULL;
-            
         
         ListNode tmphead(0);
         tmphead.next = head;
-            
+        
+        ListNode* prev = &tmphead;
         ListNode* start = head;
-        ListNode* pre = &tmphead;
-        
-        ListNode* end = NULL;
-        ListNode* post = NULL;
-        
+        ListNode* end = head;
+        ListNode* curr = head;
         int index = 1;
         
-        while (index < m) {
-            pre = start;
-            start = start->next;
-            ++index;
-        }
-        
-        end = start;
+        while (curr != NULL) {
+            if (index < m) {
+                start = start->next; 
+                prev = prev->next;
+            } 
             
-        while (index < n) {
-           end = end->next;
-            ++index;            
+            if (index < n) {
+                end = end->next;
+            }
+            
+            curr = curr->next;
+            ++index;
+            
+            if (index == n)
+                break;
         }
         
-        post = end->next;
+        ListNode* last = end->next;
+        prev->next = end;
         end->next = NULL;
         
-        
-        ListNode* curr = start->next;
-        ListNode *pre_curr = start;
-            
-        // reverse start to end
-        while (curr != NULL && pre_curr != NULL) {
-          
-            ListNode *C = curr->next;
-            curr->next = pre_curr;
-            
-            pre_curr = curr;
-            curr = C;           
-            
+        ListNode* p1 = last;
+        ListNode* p2 = start;
+        while (p2 != NULL) {
+            ListNode* tmp = p2->next;
+            p2->next = p1;
+            p1 = p2;
+            p2 = tmp;
         }
         
-        
-        pre->next = end;
-        start->next = post;
-        
         return tmphead.next;
-      
         
         
     }

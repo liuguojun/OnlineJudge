@@ -1,0 +1,46 @@
+bool isValidPartOfIP(const char* start, const char* end) {
+    int val = 0;
+    
+    if (end - start > 1 && *start == '0')
+        return false;
+        
+    while (start < end) {
+        val = val*10 + (*start - '0');
+        ++start;
+    }
+    
+    if (val >= 0 && val <= 255)
+        return true;
+    else 
+        return false;
+}
+
+class Solution {
+public:
+    vector<string> restoreIpAddresses(string s) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<string> ret;
+        
+        const char* str = s.c_str();
+        int len = s.length();
+        
+        for (const char* p1 = str+1; *p1 && p1 - str < 4; ++p1) 
+            for (const char* p2 = p1+1; *p2 && p2-p1 < 4; ++p2)
+                for (const char* p3 = p2+1; *p3 && p3-p2 < 4; ++p3) {
+                    if (isValidPartOfIP(str, p1) &&
+                        isValidPartOfIP(p1, p2) &&
+                        isValidPartOfIP(p2, p3) &&
+                        isValidPartOfIP(p3, str+len)) {
+                            
+                            ret.push_back(string(str, p1-str) + "." + string(p1, p2-p1) + "." + string(p2, p3-p2) + "." + string(p3));
+                            
+                        }
+                        
+                       
+                }
+        
+        return ret;
+        
+    }
+};
