@@ -1,0 +1,41 @@
+class Solution {
+public:
+    int largestRectangleArea(vector<int> &height) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int ret = INT_MIN;
+        
+        int size = height.size();
+        if (size == 0)
+            return 0;
+            
+        vector<int> left(size+5, 0);
+        vector<int> right(size+5, 0);
+        
+        left[0] = 0;
+        
+        for (int i = 1; i < size; ++i) {
+            left[i] = i;           
+            
+            while (left[i] > 0 && height[i] <= height[left[i]-1])
+                left[i]  = left[left[i] - 1];
+          
+        }
+   
+        right[size-1] = size-1;
+        for (int i = size-2; i >=0 ;--i) {
+            right[i] = i;          
+            
+            while (right[i] < size-1 && height[i] <= height[right[i]+1])
+                right[i] = right[right[i] + 1];
+           // right[i] = right[k];
+        }
+        
+        for (int i = 0; i< size; ++i) {
+            if (ret < height[i] *(right[i]-left[i]+1))
+                ret = height[i] *(right[i]-left[i]+1);
+        }
+        
+        return ret;
+    }
+};

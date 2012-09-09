@@ -1,0 +1,54 @@
+class Solution {
+public:
+    vector<int> searchRange(int A[], int n, int target) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int low = 0;
+        int high = n-1;
+        
+        vector<int> ret;
+        
+        if (n == 0)
+            return ret;
+            
+        while (low < high) {
+            int median = low + (high - low) / 2;
+            
+            if ( A[median] < target) {
+                low = median + 1;
+            } else {
+                high = median;
+            }
+        }
+        
+        if (A[low] == target) {
+            ret.push_back(low);
+        } else {
+            ret.push_back(-1);
+        }
+        
+        
+        low = 0;
+        high = n-1;
+        
+        while (low < high) {
+            int median = low + (high - low) / 2;
+            
+            if ( A[median] > target) {
+                high = median-1;
+            } else {
+                low = median +1;
+            }
+        }
+        
+        if (A[low] == target) {
+            ret.push_back(low);
+        } else if(A[low-1] == target){
+            ret.push_back(low-1);        
+        } else {
+            ret.push_back(-1);
+        }
+        
+        return ret;
+    }
+};
