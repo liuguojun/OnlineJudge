@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int minPathSum(vector<vector<int> > &grid) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int ret = 0;
+        if (grid.empty())
+            return 0;
+        
+        int m = grid.size();
+        int n = grid[0].size();
+        
+        int* dp = new int[m*n];
+        memset(dp, 0, sizeof(int)*m*n);
+        
+        int i, j;
+        
+        dp[0] = grid[0][0];
+        
+        for (i = 1; i < n; ++i)
+            dp[0*0+i] = dp[i-1] + grid[0][i];
+        
+        for (j = 1; j < m; ++j)
+            dp[n*j+0] = dp[n*(j-1)] + grid[j][0];
+        
+        
+        for (i = 1; i < m; ++i)
+            for (j = 1; j < n; ++j)
+                dp[i*n + j] = min(dp[(i-1)*n + j], dp[i*n+j-1]) + grid[i][j];
+                
+        ret = dp[m*n-1];
+        delete[] dp;
+        return ret;
+        
+        
+            
+        
+    }
+};

@@ -1,0 +1,44 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if (s.length() <= 1)
+            return s;
+        return s;
+        
+        int len = s.length();
+        char *LP = new char[len*len];
+        memset(LP, 0, len*len);
+        
+        for (int i = 0; i < len; ++i) 
+            LP[i*len + i] = 1;
+        
+        for (int i = 1; i < len; ++i) 
+            LP[i*len + i-1] = 1;
+        
+       
+        int Max = 0;
+        int start;
+        int end;
+        
+        for (int m = 2; m <= len; ++m)
+            for (int i = 0; i + m -1  < len; ++i) {
+                int j = i + m - 1;
+                if (s[i] == s[j] && LP[(i+1)*len + j-1] == 1) {
+                    LP[i*len+j] = 1;
+                    if (Max < m) {
+                        Max = m;
+                        start = i;
+                        end = j;
+                    }                      
+                    
+                }                
+            }
+        delete[] LP;
+        
+        return s.substr(start, end-start+1);
+            
+        
+    }
+};

@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<vector<int> > subsets(vector<int> &S) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<vector<int> > ret;
+        
+        
+        sort(S.begin(), S.end());
+        
+        if (S.empty())
+            return ret;
+        
+        int n = 1;
+        for (int i = 1; i <= S.size(); ++i)
+            n *= 2;
+        
+        int i = 0;
+        
+        while (i < n) {
+            vector<int> tmp;
+            for (int j = 0; j < 32; ++j)
+             if (i & (1 << j))
+                tmp.push_back(S[j]);
+            ret.push_back(tmp);
+            
+            ++i;
+        }
+        
+        sort(ret.begin(), ret.end());
+        ret.erase(unique(ret.begin(), ret.end()), ret.end());
+        
+        return ret;
+        
+    }
+};
