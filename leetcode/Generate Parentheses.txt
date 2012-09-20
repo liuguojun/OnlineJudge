@@ -1,0 +1,37 @@
+
+void printPar(int l, int r, char* str, int count, vector<string>& ret) {
+    if (l < 0 || r < l)
+        return;
+    
+    if (l == 0 && r == 0) {
+        ret.push_back(str);
+    } else {
+        if (l > 0) {
+            str[count] = '(';
+            printPar(l-1, r, str, count+1, ret);
+        }
+        
+        if (r > l) {
+            str[count] = ')';
+            printPar(l, r-1, str, count+1, ret);
+        }
+    }
+}
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        
+        char* str = new char[n*2+1];
+        str[n*2] = 0;
+        
+        vector<string> ret;
+        
+        printPar(n, n, str, 0, ret);
+        
+        return ret;
+        
+    }
+};
