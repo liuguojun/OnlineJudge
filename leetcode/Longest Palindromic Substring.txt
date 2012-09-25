@@ -1,0 +1,58 @@
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        char* str = new char[s.length()*3];
+        
+        int index = 0;
+        for (int i = 0; i < s.length(); ++i) {
+            str[index] = '#';
+            str[index+1] = s[i];
+            index += 2;            
+        }
+        str[index++] = '#';
+        str[index] = 0;
+     
+        int len =strlen(str);
+        
+        int left;
+        int right;
+        
+        int Max = -1;
+        int center = 0;
+        
+        for (int i = 0; i < len; ++i) {
+            left = i;
+            right = i;
+            
+            while (left-1 >= 0 && right+1 < len && str[left-1] == str[right+1]) {
+                --left;
+                ++right;
+            }
+            
+            int l = (right-left+2)/2;
+            
+            if (Max < l) {
+                Max = l;
+                center = i;
+            }
+        }
+        
+        left = center - Max + 1;
+        right = center + Max - 1;
+        
+        index = 0;
+        while (left <= right) {
+            if (str[left] != '#')
+                str[index++] = str[left];
+            ++left;
+            
+        }
+        
+        str[index] = 0;
+        
+        return string(str);
+        
+    }
+};

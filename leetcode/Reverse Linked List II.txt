@@ -12,46 +12,52 @@ public:
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
         if (head == NULL)
-            return NULL;
+            return 0;
         
         ListNode tmphead(0);
         tmphead.next = head;
         
+        // 先找出m, n 所在的点
         ListNode* prev = &tmphead;
-        ListNode* start = head;
+        ListNode* begin = head;
         ListNode* end = head;
-        ListNode* curr = head;
+        
         int index = 1;
         
-        while (curr != NULL) {
-            if (index < m) {
-                start = start->next; 
-                prev = prev->next;
-            } 
-            
-            if (index < n) {
-                end = end->next;
-            }
-            
-            curr = curr->next;
+        while (index < m) {
+            prev = prev->next;
+            begin = begin->next;
+            end = end->next;
             ++index;
-            
-            if (index == n)
-                break;
         }
         
-        ListNode* last = end->next;
-        prev->next = end;
+        while (index < n) {
+            end = end->next;
+            ++index;
+        }
+        
+        
+        ListNode* post = end->next;
+        
         end->next = NULL;
         
-        ListNode* p1 = last;
-        ListNode* p2 = start;
-        while (p2 != NULL) {
-            ListNode* tmp = p2->next;
-            p2->next = p1;
-            p1 = p2;
-            p2 = tmp;
+        
+        //下面是标准的倒置链表
+        
+        ListNode* curr = begin->next;
+        ListNode* left = begin;
+        
+        while (curr) {
+            ListNode* right = curr->next;
+            curr->next = left;
+            
+            left = curr;
+            curr = right;        
         }
+        
+        
+        prev->next = end;
+        begin->next = post;
         
         return tmphead.next;
         

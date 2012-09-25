@@ -11,38 +11,49 @@ public:
     ListNode *partition(ListNode *head, int x) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
+                
         if (head == NULL)
-            return NULL;
+            return NULL;      
+              
+        ListNode* less = NULL;
+        ListNode* great = NULL;
         
-        ListNode small(0);    
-        
-        ListNode large(0);
-        
-        
-        ListNode* psmall = &small;
-        ListNode* plarge = &large;    
-        
-        
+        ListNode* lhead = NULL;
+        ListNode* ghead = NULL;
         
         while (head != NULL) {
-        
             if (head->val < x) {
-                psmall->next = head;
-                psmall = psmall->next;
+                if (less == NULL) {
+                    less = head;
+                    lhead = head;
+                } else {
+                    less->next = head;
+                    less = head;
+                }
             } else {
-                plarge->next = head;
-                plarge = plarge->next;
+                if (great == NULL) {
+                    great = head;
+                    ghead = head;                    
+                } else {
+                    great->next = head;
+                    great = head;
+                }
             }
+            
             head = head->next;
-            
-            
-           
         }
         
-        plarge->next = NULL;
-        psmall->next = large.next;
-        
-        return small.next;
+        if (lhead == NULL) {
+            great->next = NULL;
+            return ghead;
+        } else if (ghead == NULL) {
+            less->next = NULL;
+            return lhead;
+        } else {
+            great->next = NULL;
+            less->next = ghead;
+            return lhead;
+        }
         
     }
 };

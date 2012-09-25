@@ -1,0 +1,44 @@
+class Solution {
+public:
+
+    void combine(vector<bool>& used, int start, int k, vector<int>& curr, vector<vector<int> >& ret) {
+        
+        if (start+1 > used.size() || curr.size() == k ) {
+            if (curr.size() == k) {                
+                sort(curr.begin(), curr.end());
+                ret.push_back(curr);
+            }
+                
+            return;
+        }
+        
+        // use 
+        used[start] = true;
+        curr.push_back(start);
+        combine(used, start+1, k, curr, ret);
+        
+        curr.pop_back();
+        used[start] = false;
+        
+        
+        // no use
+        
+        combine(used, start+1, k, curr, ret);
+        
+    }
+    
+    vector<vector<int> > combine(int n, int k) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        
+        vector<vector<int> > ret;
+        
+        vector<bool> used(n+1, false);
+        vector<int> curr;
+        
+        combine(used, 1, k, curr, ret);
+        
+        return ret;
+        
+    }
+};

@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if (s.empty())
+            return 0;
+            
+        bool used[26] = {false};
+        
+        int longest = 0;
+        
+        int start = 0;
+        int end = 0;
+        
+        while (end < s.length() ) {
+            while (end < s.length() && !used[s[end]-'a']) {
+                used[s[end]-'a'] = true;
+                ++end;
+            }
+            
+            if (longest < end - start) {
+                longest = end - start;
+            }
+            
+            while (s[start] != s[end]) {
+                used[s[start]-'a'] = false;
+                ++start;
+            }
+            
+            used[s[start]-'a'] = false;
+            ++start;            
+        }
+        
+        if (longest < end - start)
+            longest = end - start;
+        
+        return longest;
+        
+        
+    }
+};
