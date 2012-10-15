@@ -1,0 +1,41 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+
+    TreeNode *buildTree(vector<int>::iterator begin, vector<int>::iterator end) {
+    
+        if (begin == end)
+            return NULL;
+            
+        if (begin+1 == end)
+            return new TreeNode(*begin);
+        
+        vector<int>::iterator iter = begin + (end-begin) / 2;
+        
+        TreeNode* node = new TreeNode(*iter);
+        
+        node->left = buildTree(begin, iter);
+        node->right = buildTree(iter+1, end);
+        
+        return node;
+    }
+    
+    TreeNode *sortedArrayToBST(vector<int> &num) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        if (num.empty())
+            return NULL;
+            
+        return buildTree(num.begin(), num.end());
+        
+        
+    }
+};

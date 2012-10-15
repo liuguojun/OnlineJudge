@@ -1,0 +1,58 @@
+class Solution {
+public:
+
+    void output(int line[], int n, vector<vector<string> >& ret) {
+        vector<string> tmp;
+        for (int i = 1; i <= n; ++i) {
+            string t(n, '.');
+            t[line[i]-1] = 'Q';
+            tmp.push_back(t);
+        }
+        
+        ret.push_back(tmp);
+        
+    }
+    
+    
+    bool check(int line[], int curr) {
+        for (int i = 1; i < curr; ++i)
+            if (line[i] == line[curr] || line[i]-line[curr] == i -curr || line[i]-line[curr] == curr-i )
+                return false;
+        
+        return true;
+        
+    }
+    
+    void nqueens(int line[], int curr, int K, vector<vector<string> >& ret) {
+        if (curr == K+1) {
+            output(line, K, ret);
+            return;            
+        }
+        
+        for (int i = 1; i <= K; ++i) {
+            
+            line[curr] = i;
+            if (check(line, curr))
+                nqueens(line, curr+1, K, ret);
+            line[curr] = 0;
+        }
+                
+        
+    }
+    vector<vector<string> > solveNQueens(int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        
+        int *line = new int[n+1];
+        memset(line, 0, sizeof(int)*(n+1));
+        
+        vector<vector<string> > ret;
+        
+        nqueens(line, 1, n, ret);
+        
+        return ret;
+        
+        
+        
+    }
+};

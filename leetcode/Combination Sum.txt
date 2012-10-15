@@ -1,0 +1,40 @@
+class Solution {
+public:
+
+    void pickup(vector<int>& cand, vector<vector<int> >& ret, int target, int curr, vector<int>& tmp) {
+        
+        if (target == 0) {
+            ret.push_back(tmp);
+            return;
+        }
+        
+        if (curr >= cand.size())
+            return;
+        
+        if (cand[curr] > target)
+            return;
+        
+        tmp.push_back(cand[curr]);
+        pickup(cand, ret, target-cand[curr], curr, tmp);
+        
+        
+        tmp.pop_back();
+        pickup(cand, ret, target, curr+1, tmp);
+    }
+
+    vector<vector<int> > combinationSum(vector<int> &candidates, int target) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        vector<vector<int> > ret;
+        vector<int> tmp;
+        sort(candidates.begin(), candidates.end());
+        
+        pickup(candidates, ret, target, 0, tmp);
+        
+        
+        ret.erase(unique(ret.begin(), ret.end()), ret.end());
+        
+        return ret;
+        
+    }
+};
